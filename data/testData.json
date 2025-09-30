@@ -1,0 +1,33 @@
+{
+  "validUser": {
+    "name": "John Doe",
+    "emailAddress": "john@example.com",
+    "password": "password123"
+  },
+  "invalidUser": {
+    "emailAddress": "john@exampl.com",
+    "password": "wrongpassword"
+  },
+  "signupDetails": {
+    "user1": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "address1": "123 Test Street",
+      "country": "Canada",
+      "state": "Ontario",
+      "city": "Toronto",
+      "zipcode": "M5V 3A8",
+      "mobileNumber": "+1 416 555 0123"
+    },
+    "user2": {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "address1": "456 Demo Avenue",
+      "country": "United States",
+      "state": "California",
+      "city": "San Francisco",
+      "zipcode": "94102",
+      "mobileNumber": "+1 415 555 0456"
+    }
+  }
+}
