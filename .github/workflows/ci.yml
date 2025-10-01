@@ -39,7 +39,7 @@ jobs:
       continue-on-error: true
       run: |
         set -e
-        npx playwright test --workers=1 --retries=1 --reporter=list,html,allure-playwright
+        npx playwright test --workers=1 --retries=1 --reporter=list,html
         test_exit_code=$?
         echo "Test exit code: $test_exit_code"
         exit $test_exit_code
@@ -53,9 +53,3 @@ jobs:
           test-results/
           playwright-report/
         retention-days: 7
-
-    - name: Generate Allure Report
-      if: always()
-      run: |
-        npx allure generate test-results/allure --clean --output test-results/allure-report
-        npx allure serve test-results/allure
