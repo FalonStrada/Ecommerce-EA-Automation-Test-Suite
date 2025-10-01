@@ -52,25 +52,32 @@ export class ProductsPage {
   async expectSearchResultsVisible(searchTerm: string) {
     await expect(this.productsGrid).toBeVisible();
     
-    // Obtener todos los productos mostrados
-    const productItems = this.productsGrid.locator('.col-sm-4 .productinfo');
+    // Obtener todos los productos mostrados - selector actualizado para coincidir con la estructura real
+    const productItems = this.productsGrid.locator('.product-image-wrapper');
     const count = await productItems.count();
     
     // Verificar que hay al menos un resultado
-    await expect(count).toBeGreaterThan(0);
+    if (count === 0) {
+      throw new Error('No se encontraron productos en los resultados de búsqueda');
+    }
     
-    // Verificar que cada producto mostrado contiene el término de búsqueda en el nombre o descripción
+    // Verificar que cada producto mostrado contiene el término de búsqueda
     for (let i = 0; i < count; i++) {
-      const productName = await productItems.nth(i).locator('p').first().textContent() || '';
+      const currentItem = productItems.nth(i);
+      const productName = await currentItem.locator('p').first().textContent() || '';
       const productNameLower = productName.toLowerCase();
       const searchTermLower = searchTerm.toLowerCase();
       
       // Verificar que el término de búsqueda está en el nombre del producto
-      // o en la descripción si está disponible
-      expect(
-        productNameLower.includes(searchTermLower),
-        `El producto "${productName}" no contiene el término de búsqueda "${searchTerm}"`
-      ).toBeTruthy();
+      if (!productNameLower.includes(searchTermLower)) {
+        // Si no está en el nombre, verificar en la descripción si existe
+        const productDescription = await currentItem.locator('p:not(.text-center)').first().textContent() || '';
+        const productDescriptionLower = productDescription.toLowerCase();
+        
+        if (!productDescriptionLower.includes(searchTermLower)) {
+          throw new Error(`El producto "${productName}" no contiene el término de búsqueda "${searchTerm}" en su nombre o descripción`);
+        }
+      }
     }
   }
 }
