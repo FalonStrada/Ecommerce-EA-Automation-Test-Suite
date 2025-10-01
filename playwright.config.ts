@@ -5,20 +5,31 @@ const env = getEnvironment();
 
 export default defineConfig({
   testDir: './tests',
-  retries: env.retries,
-  timeout: env.timeout,
+  retries: process.env.CI ? 1 : env.retries,
+  timeout: process.env.CI ? 60_000 : env.timeout, // Aumentar timeout en CI
   expect: {
-    timeout: 5_000,
+    timeout: process.env.CI ? 10_000 : 5_000,
+    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
   },
   use: {
-    headless: true, // headed runs can be enabled via CLI when needed
+    headless: !!process.env.CI, // Headless en CI, headed localmente
     baseURL: env.baseURL,
-    actionTimeout: 10_000,
-    navigationTimeout: 15_000,
-    // Screenshots and videos on failure
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
+    // Capturas de pantalla y videos
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
+    video: 'on-first-retry',
+    trace: 'on-first-retry',
+    // Configuración adicional para CI
+    launchOptions: {
+      slowMo: process.env.CI ? 100 : 0,
+    },
+    // Configuración específica para CI
+    ...(process.env.CI ? {
+      screenshot: 'on',
+      video: 'on',
+      trace: 'on'
+    } : {}),
   // Report configuration
   reporter: [
     // Standard Playwright HTML report

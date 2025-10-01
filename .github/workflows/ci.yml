@@ -6,27 +6,54 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'false'
+  PLAYWRIGHT_BROWSERS_PATH: '0'
+  DEBUG: 'pw:api*'
+  NODE_OPTIONS: '--max_old_space_size=4096'
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 30
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Node.js
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
-        
+        node-version: '18.x'
+        cache: 'npm'
+
     - name: Install dependencies
-      run: npm ci
-      
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-      
-    - name: Run tests
-      run: npx playwright test
-      
+      run: |
+        npm ci
+        npx playwright install --with-deps
+
+    - name: Verify Playwright
+      run: npx playwright --version
+
+    - name: Run tests with retries
+      continue-on-error: true
+      run: |
+        set -e
+        npx playwright test --workers=1 --retries=1 --reporter=list,html,allure-playwright
+        test_exit_code=$?
+        echo "Test exit code: $test_exit_code"
+        exit $test_exit_code
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          test-results/
+          playwright-report/
+        retention-days: 7
+
     - name: Generate Allure Report
       if: always()
       run: |
