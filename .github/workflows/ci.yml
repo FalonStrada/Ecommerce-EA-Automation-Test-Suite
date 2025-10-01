@@ -57,5 +57,5 @@ jobs:
     - name: Generate Allure Report
       if: always()
       run: |
-        npx allure generate test-results/allure --clean -o test-results/allure-report
+        npx allure generate test-results/allure --clean --output test-results/allure-report
         npx allure serve test-results/allure
