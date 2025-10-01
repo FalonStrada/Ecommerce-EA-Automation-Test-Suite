@@ -1,0 +1,34 @@
+name: CI - Test Execution
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+      
+    - name: Run tests
+      run: npx playwright test
+      
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        npx allure generate test-results/allure --clean -o test-results/allure-report
+        npx allure serve test-results/allure
