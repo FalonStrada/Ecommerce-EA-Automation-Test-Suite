@@ -1,17 +1,113 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
+import { getEnvironment } from './config/environments';
+
+const env = getEnvironment();
 
 export default defineConfig({
   testDir: './tests',
-  // Keep runs short while debugging
-  retries: 0,
-  timeout: 20_000, // per-test timeout
+  retries: env.retries,
+  timeout: env.timeout,
   expect: {
     timeout: 5_000,
   },
   use: {
     headless: true, // headed runs can be enabled via CLI when needed
-    baseURL: 'https://www.automationexercise.com',
+    baseURL: env.baseURL,
     actionTimeout: 10_000,
     navigationTimeout: 15_000,
+    // Screenshots and videos on failure
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
+  // Report configuration
+  reporter: [
+    // Standard Playwright HTML report
+    ['html', { 
+      outputFolder: 'test-results/html',
+      open: 'on-failure' // Solo abre si hay fallos
+    }],
+    // Console output
+    ['list'],
+    // Allure report (simplified)
+    ['allure-playwright', {
+      detail: true,
+      outputFolder: 'test-results/allure',
+      suiteTitle: false,
+      environmentInfo: {
+        NODE_VERSION: process.version,
+        OS: process.platform,
+      },
+      // Configuración para limpieza y organización
+      cleanResults: true,
+      // Forzar a que todo vaya a la misma carpeta
+      testMode: true,
+      // No generar archivos adicionales
+      addConsoleLogs: false,
+      addAttachments: false
+    }],
+    // JSON report for CI/CD integration
+    ['json', { 
+      outputFile: 'test-results/results.json' 
+    }]
+  ],
+  // Configure projects for major browsers
+  projects: [
+    {
+      name: 'chromium',
+      use: { 
+        ...devices['Desktop Chrome'],
+        // Optimized Chromium configuration for practice projects
+        launchOptions: {
+          args: [
+            '--block-new-web-contents',
+            '--disable-popup-blocking=false',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding',
+            '--disable-features=TranslateUI',
+            '--disable-iframes-during-prerender',
+            '--disable-background-networking',
+            '--no-default-browser-check',
+            '--disable-extensions-except',
+            '--disable-plugins-discovery',
+            '--disable-preconnect',
+            '--disable-sync',
+            '--no-first-run',
+            '--disable-default-apps',
+            '--block-new-web-contents'
+          ]
+        },
+        // Additional Chromium security settings
+        contextOptions: {
+          permissions: [], // No permissions by default
+        }
+      },
+    },
+    // Firefox disabled for practice projects due to ad interference
+    // Uncomment if needed for comprehensive browser testing
+    // {
+    //   name: 'firefox',
+    //   use: { 
+    //     ...devices['Desktop Firefox'],
+    //     launchOptions: {
+    //       firefoxUserPrefs: {
+    //         'dom.popup_maximum': 0,
+    //         'dom.disable_open_during_load': true,
+    //         'privacy.trackingprotection.enabled': true,
+    //       }
+    //     }
+    //   },
+    // },
+    // WebKit disabled due to ad interference issues
+    // Uncomment if needed for specific testing scenarios
+    // {
+    //   name: 'webkit',
+    //   use: { 
+    //     ...devices['Desktop Safari'],
+    //     launchOptions: {
+    //       args: ['--disable-web-security']
+    //     }
+    //   },
+    // },
+  ],
 });

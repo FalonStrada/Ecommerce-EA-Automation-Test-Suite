@@ -49,9 +49,28 @@ export class ProductsPage {
     await expect(this.searchedProductsHeader).toBeVisible();
   }
 
-  async expectSearchResultsVisible() {
+  async expectSearchResultsVisible(searchTerm: string) {
     await expect(this.productsGrid).toBeVisible();
-    // Verify that search results are displayed (at least first result is visible)
-    await expect(this.productsGrid.locator('.col-sm-4').first()).toBeVisible();
+    
+    // Obtener todos los productos mostrados
+    const productItems = this.productsGrid.locator('.col-sm-4 .productinfo');
+    const count = await productItems.count();
+    
+    // Verificar que hay al menos un resultado
+    await expect(count).toBeGreaterThan(0);
+    
+    // Verificar que cada producto mostrado contiene el término de búsqueda en el nombre o descripción
+    for (let i = 0; i < count; i++) {
+      const productName = await productItems.nth(i).locator('p').first().textContent() || '';
+      const productNameLower = productName.toLowerCase();
+      const searchTermLower = searchTerm.toLowerCase();
+      
+      // Verificar que el término de búsqueda está en el nombre del producto
+      // o en la descripción si está disponible
+      expect(
+        productNameLower.includes(searchTermLower),
+        `El producto "${productName}" no contiene el término de búsqueda "${searchTerm}"`
+      ).toBeTruthy();
+    }
   }
 }

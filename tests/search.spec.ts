@@ -34,6 +34,6 @@ test('TC1: Search Product', async ({ page }) => {
   });
 
   await test.step('Verify all the products related to search are visible', async () => {
-    await products.expectSearchResultsVisible();
+    await products.expectSearchResultsVisible('dress');
   });
 });
