@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { getEnvironment } from './config/environments';
 
+
+
 const env = getEnvironment();
 
 export default defineConfig({
@@ -29,7 +31,8 @@ export default defineConfig({
       screenshot: 'on',
       video: 'on',
       trace: 'on'
-    } : {}),
+    } : {})
+  },
   // Report configuration
   reporter: [
     // Standard Playwright HTML report
@@ -120,5 +123,19 @@ export default defineConfig({
     //     }
     //   },
     // },
+    // Proyecto específico para API Testing
+    {
+      name: 'api',
+      testMatch: /.*\/api\/.*\.spec\.ts/, // Solo archivos en carpeta api
+      use: {
+        baseURL: process.env.API_BASE_URL || 'https://automationexercise.com/api',
+        extraHTTPHeaders: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+    }
   ],
 });
+
+

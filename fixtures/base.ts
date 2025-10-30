@@ -38,6 +38,7 @@ export const test = base.extend<{
   testSession: TestSession;
   cleanSession: void;
   stableHomePage: HomePage;
+  navigatedProductsPage: ProductsPage;
 }>({
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
@@ -223,6 +224,30 @@ export const test = base.extend<{
     await use(homePage);
     
     // No cleanup needed - page will be closed automatically
+  },
+
+  /**
+   * ProductsPage with automatic navigation from home
+   * Navigates: Home → Products page
+   * Perfect for tests that start from products page
+   */
+  navigatedProductsPage: async ({ page, adBlocker }, use) => {
+    const homePage = new HomePage(page);
+    const header = new Header(page);
+    const productsPage = new ProductsPage(page);
+    
+    // Navigate to products page
+    await homePage.navigateHomePage();
+    await adBlocker.closePopups();
+    await adBlocker.waitForStablePage();
+    await homePage.expectHomeVisible();
+    await header.clickProducts();
+    await productsPage.expectAllProductsVisible();
+    await page.waitForURL(/\/products(?:$|[?#])/);
+    
+    await use(productsPage);
+    
+    // No cleanup needed
   },
 });
 

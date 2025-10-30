@@ -34,6 +34,14 @@
     "test:examples": "npx playwright test examples/",
     "test:fixtures-demo": "npx playwright test examples/advanced-fixtures-examples.spec.ts",
     "test:adblocker-demo": "npx playwright test examples/example-with-adblocker.spec.ts",
+    "test:api": "npx playwright test tests/api/ --project=api",
+    "test:api:products": "npx playwright test tests/api/products.api.spec.ts --project=api",
+    "test:api:auth": "npx playwright test tests/api/auth.api.spec.ts --project=api",
+    "test:api:performance": "npx playwright test tests/api/performance.api.spec.ts --project=api",
+    "test:api:headed": "npx playwright test tests/api/ --project=api --headed",
+    "test:api:debug": "npx playwright test tests/api/ --project=api --debug",
+    "test:ui": "npx playwright test tests/ui/",
+    "test:all": "npx playwright test",
     "report": "npx playwright show-report",
     "install:browsers": "npx playwright install"
   },
@@ -42,8 +50,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.56.0",
     "@types/node": "^24.6.0",
+    "ajv": "^8.17.1",
     "allure-playwright": "^3.4.1"
+  },
+  "dependencies": {
+    "@playwright/mcp": "^0.0.44"
   }
 }
