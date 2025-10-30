@@ -1,0 +1,8 @@
+
+=== Search Performance by Query ===
+"tshirt": 277ms
+"jeans": 269ms
+"dress": 295ms
+"top": 308ms
+====================================
+

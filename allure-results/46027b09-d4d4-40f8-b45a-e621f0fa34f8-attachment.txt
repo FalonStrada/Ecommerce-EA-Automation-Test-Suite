@@ -1,0 +1,7 @@
+
+=== Caching Analysis ===
+First request: 314ms
+Second request: 304ms
+Difference: 10ms
+=========================
+

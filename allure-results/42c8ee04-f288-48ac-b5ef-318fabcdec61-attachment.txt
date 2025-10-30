@@ -1,0 +1,6 @@
+
+=== Endpoint Performance Comparison ===
+Products List: 322ms
+Brands List: 272ms
+========================================
+

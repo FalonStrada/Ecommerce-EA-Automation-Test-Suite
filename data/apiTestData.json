@@ -1,0 +1,74 @@
+{
+  "users": {
+    "validUser": {
+      "name": "API Test User",
+      "email": "apitest@example.com",
+      "password": "Test123!@#",
+      "title": "Mr",
+      "birth_date": "15",
+      "birth_month": "6",
+      "birth_year": "1990",
+      "firstname": "API",
+      "lastname": "User",
+      "company": "Test Company",
+      "address1": "123 API Street",
+      "address2": "Suite 100",
+      "country": "United States",
+      "zipcode": "12345",
+      "state": "California",
+      "city": "San Francisco",
+      "mobile_number": "+1234567890"
+    },
+    "invalidUser": {
+      "email": "invalid@example.com",
+      "password": "wrongpassword"
+    }
+  },
+  "products": {
+    "searchQueries": {
+      "valid": ["tshirt", "jeans", "dress", "top"],
+      "invalid": ["xyzabc123", "!@#$%"],
+      "empty": ""
+    },
+    "filters": {
+      "brands": ["Polo", "H&M", "Madame"],
+      "categories": ["Women", "Men", "Kids"]
+    }
+  },
+  "testScenarios": {
+    "performance": {
+      "maxResponseTime": 3000,
+      "acceptableResponseTime": 1000
+    },
+    "pagination": {
+      "defaultPageSize": 10,
+      "maxPageSize": 100
+    },
+    "rateLimit": {
+      "maxRequestsPerMinute": 60,
+      "burstSize": 10
+    }
+  },
+  "expectedResponses": {
+    "success": {
+      "responseCode": 200,
+      "message": "Success"
+    },
+    "created": {
+      "responseCode": 201,
+      "message": "User created!"
+    },
+    "userExists": {
+      "responseCode": 400,
+      "message": "User exists!"
+    },
+    "userNotFound": {
+      "responseCode": 404,
+      "message": "User not found!"
+    },
+    "missingParameters": {
+      "responseCode": 400,
+      "message": "Bad request, parameters missing!"
+    }
+  }
+}

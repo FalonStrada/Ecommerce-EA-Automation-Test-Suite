@@ -1,0 +1,1 @@
+⚠️  BUG: Search for "dress" returned 9 products (should be filtered)

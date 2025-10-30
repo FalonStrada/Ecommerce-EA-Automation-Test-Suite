@@ -1,0 +1,7 @@
+
+=== Response Time Consistency ===
+Average: 288.20ms
+Std Deviation: 6.79ms
+Coefficient of Variation: 2.36%
+==================================
+

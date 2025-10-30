@@ -1,0 +1,3 @@
+Security header x-content-type-options: ✓
+Security header x-frame-options: ✓
+Security header strict-transport-security: ✗
