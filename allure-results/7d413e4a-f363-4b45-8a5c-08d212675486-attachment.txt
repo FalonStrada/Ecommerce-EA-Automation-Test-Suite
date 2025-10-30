@@ -1,7 +1,0 @@
-
-=== Sequential Load Test ===
-First half avg: 339.30ms
-Second half avg: 361.10ms
-Degradation: 6.42%
-=============================
-

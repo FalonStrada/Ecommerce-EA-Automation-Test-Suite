@@ -1,3 +1,0 @@
-
-Large payload response time: 234ms
-

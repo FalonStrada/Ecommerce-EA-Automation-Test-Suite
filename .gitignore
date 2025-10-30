@@ -39,3 +39,9 @@ coverage/
 
 # Examples (not part of regression suite)
 examples/
+
+# Allure Reports
+allure-results/
+allure-report/
+test-results/
+playwright-report/

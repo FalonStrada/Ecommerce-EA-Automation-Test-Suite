@@ -1,9 +1,0 @@
-
-=== Concurrent Request Test ===
-Total requests: 10
-Successful: 10
-Success rate: 100%
-Total duration: 1000ms
-Avg per request: 100.00ms
-================================
-

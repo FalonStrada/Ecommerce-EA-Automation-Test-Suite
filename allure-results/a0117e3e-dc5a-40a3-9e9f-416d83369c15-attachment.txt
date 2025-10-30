@@ -1,8 +1,0 @@
-
-=== Performance Baseline ===
-Average: 376.20ms
-Min: 284ms
-Max: 880ms
-Median: 316ms
-============================
-

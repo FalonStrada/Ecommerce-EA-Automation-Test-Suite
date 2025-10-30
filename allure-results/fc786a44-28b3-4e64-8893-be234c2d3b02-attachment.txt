@@ -1,7 +1,0 @@
-
-=== Query Complexity Impact ===
-Simple query: 286ms
-Complex query: 252ms
-Difference: -34ms
-================================
-

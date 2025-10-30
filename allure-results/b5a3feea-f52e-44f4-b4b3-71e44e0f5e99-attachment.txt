@@ -1,9 +1,0 @@
-
-=== Throughput Test ===
-Duration: 10001ms
-Total requests: 35
-Successful: 35
-Success rate: 100.00%
-Throughput: 3.50 req/s
-========================
-

@@ -1,7 +1,0 @@
-
-=== Time to First Byte ===
-Average TTFB: 295.60ms
-Min TTFB: 286ms
-Max TTFB: 301ms
-===========================
-
