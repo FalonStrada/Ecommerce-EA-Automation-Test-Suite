@@ -4,6 +4,7 @@ import { LoginPage } from '../pages/loginPage';
 import { SignupFlowPage } from '../pages/signupFlowPage';
 import { ProductsPage } from '../pages/productsPage';
 import { ProductDetailPage } from '../pages/productDetailPage';
+import { UserPurchasePage } from '../pages/userPurchasePage';
 import { Header } from '../pages/header';
 import { AccountDeletedPage } from '../pages/accountDeletedPage';
 import { AdBlocker } from '../utils/adBlocker';
@@ -30,6 +31,7 @@ export const test = base.extend<{
   signupFlowPage: SignupFlowPage;
   productsPage: ProductsPage;
   productDetailPage: ProductDetailPage;
+  userPurchasePage: UserPurchasePage;
   header: Header;
   accountDeletedPage: AccountDeletedPage;
   adBlocker: AdBlocker;
@@ -58,6 +60,10 @@ export const test = base.extend<{
 
   productDetailPage: async ({ page }, use) => {
     await use(new ProductDetailPage(page));
+  },
+
+  userPurchasePage: async ({ page }, use) => {
+    await use(new UserPurchasePage(page));
   },
 
   header: async ({ page }, use) => {

@@ -134,7 +134,7 @@ export class APITestHelpers {
       if (typeof value === 'string') {
         formData.append(key, value);
       } else {
-        formData.append(key, new Blob([value]));
+        formData.append(key, new Blob([new Uint8Array(value)]));
       }
     });
     return formData;
