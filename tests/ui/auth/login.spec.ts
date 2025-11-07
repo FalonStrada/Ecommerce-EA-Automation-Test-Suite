@@ -2,16 +2,7 @@ import { test, expect } from '../../../fixtures/base';
 import testData from '../../../data/testData.json';
 import { fullUrl, URLS } from '../../../config/urls';
 
-/**
- * Login Tests
- * Separated into focused, single-responsibility tests
- * 
- * Test Order:
- * E1: Login with invalid credentials - expects "Your email or password is incorrect!"
- * E2: Login with empty password - expects "Completa este campo"
- * E3: Login with empty email - expects "Completa este campo"
- * E4: Successful login with valid credentials (unmail@mailinator.com / 12345678)
- */
+
 
 test.describe('Login Tests', () => {
   test.beforeEach(async ({ page, loginPage }) => {

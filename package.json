@@ -43,19 +43,20 @@
     "test:ui": "npx playwright test tests/ui/",
     "test:all": "npx playwright test",
     "report": "npx playwright show-report",
-    "install:browsers": "npx playwright install"
+    "install:browsers": "npx playwright install",
+    "clean:reports": "rmdir /s /q allure-results allure-report test-results playwright-report 2>nul || true",
+    "test:login:clean": "npm run clean:reports && npx playwright test tests/ui/auth/login.spec.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.56.0",
+    "@playwright/mcp": "^0.0.43",
+    "@playwright/test": "^1.56.1",
     "@types/node": "^24.6.0",
     "ajv": "^8.17.1",
-    "allure-playwright": "^3.4.1"
-  },
-  "dependencies": {
-    "@playwright/mcp": "^0.0.44"
+    "allure-playwright": "^3.4.2",
+    "playwright": "^1.56.1"
   }
 }
